@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class baitapnhom_4 {
     public static void main(String[] args) {
         System.out.printf("Số tiền gửi vào ngân hàng là  ");
