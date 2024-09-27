@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class baitapnhom_3 {
+public class TH2_3 {
     public static void main(String[] args) {
         //Nhập dữ liệu
         System.out.printf("Nhập vào số nguyên a = ");
