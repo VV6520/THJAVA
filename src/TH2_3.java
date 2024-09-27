@@ -18,6 +18,6 @@ public class TH2_3 {
         System.out.println("Hiệu a-b = " +hieu);
         System.out.println("Tích a*b = " +tich);
         System.out.println("Thương a/b = " +thuong);
-        System.out.println("Chia lây dư a%b = " +du);
+        System.out.println("Chia lấy dư a%b = " +du);
     }
 }
