@@ -1,11 +1,12 @@
 import java.util.Scanner;
+
 public class Bai4_T2 {
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);
         System.out.print("Nhap so tien gui (VND): ");
         double soTienGoc = sc.nextDouble();
         System.out.print("Nhap lai suat hang nam: ");
-        double laiSuatHangNam = sc.nextDouble(); // Nhập trực tiếp với dấu %
+        double laiSuatHangNam = sc.nextDouble();
         System.out.print("Nhap so thang gui: ");
         int soThangGui = sc.nextInt();
         sc.close();
