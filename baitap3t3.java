@@ -13,6 +13,7 @@ public class baitap3t3 {
 		 * x1=(-b-sqtr(delta))/(2a)
 		 * x2=(-b+sqrt(delta))/(2a)
 		 */
+		//Thiếu trường hợp a=0 (Văn Vũ nhận xét)
 		double a,b,c,x1,x2,delta;
 		System.out.println("nhap vao a= ");
 		a=sc.nextDouble();
