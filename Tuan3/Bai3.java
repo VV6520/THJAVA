@@ -24,7 +24,7 @@ public class Bai3 {
             }
         }
         else{
-            double delta = b * b - 4 * a * c;
+            double delta = Math.pow(b,2) - 4*a*c;
             if (delta > 0) {
                 double x1 = (-b + Math.sqrt(delta)) / (2 * a);
                 double x2 = (-b - Math.sqrt(delta)) / (2 * a);
