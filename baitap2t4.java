@@ -5,8 +5,8 @@ public class baitap2t4 {
 		Scanner sc=new Scanner(System.in);
 		int n=10;
 		int s;
-		for(int i=1;i<=n;i++) {
-			for(int j=0;j<=10;j++) {
+		for(int i=2;i<=n;i++) {//(Văn Vũ đã sửa)
+			for(int j=1;j<=10;j++) {
 				s=i*j;
 				System.out.println(i+" * "+j+" = "+s);
 			}
