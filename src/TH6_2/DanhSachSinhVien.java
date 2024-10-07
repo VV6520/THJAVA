@@ -18,13 +18,13 @@ public class DanhSachSinhVien {
     public void themSinhVien(SinhVien sv){
         this.danhsach.add(sv);
     }
-    //2.In danh sách hoc sinh ra màn hình
+    //2.In danh sách sinh viên ra màn hình
     public void inDanhSachSinhVien(){
         for (SinhVien sinhVien : danhsach){
             System.out.println(sinhVien);
         }
     }
-    //9. Xuất ra danh sách sinh viên có điểm từ thấp đến cao
+    //3. Xuất ra danh sách sinh vien có điểm từ thấp đến cao
     public void saXepDiemSvGiamDan(){
         Collections.sort(this.danhsach, new Comparator<SinhVien>() {
             @Override

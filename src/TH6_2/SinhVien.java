@@ -44,16 +44,14 @@ public class SinhVien implements Comparable<SinhVien>{
     }
     @Override
     public String toString() {
-        return "HocSinh{" +
-                "maSV= " + maSV +
-                ", hoTen= " + hoTen +
-                ", ngaySinh= " + ngaySinh +
-                ", diem=" + diem +
-                "}";
+        return "maSV: " + maSV +
+                ", hoTen: " + hoTen +
+                ", ngaySinh: " + ngaySinh +
+                ", diemTB: " + diem;
     }
     @Override
-    public int compareTo(SinhVien o) {
-        return this.maSV.compareTo(o.maSV);
+    public int compareTo(SinhVien obj) {
+        return this.maSV.compareTo(obj.maSV);
     }
 
     @Override
