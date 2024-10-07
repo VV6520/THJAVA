@@ -21,7 +21,7 @@ public class Bai_7 {
             sc.nextLine();
             switch (luaChon){
                 case 1:
-                    System.out.println("Nhập mã sinh viên: ");
+                    System.out.println("Nhập mã học sinh: ");
                     String maHocSinh = sc.nextLine();
                     System.out.println("Nhập họ và tên: ");
                     String hoVaten = sc.nextLine();
