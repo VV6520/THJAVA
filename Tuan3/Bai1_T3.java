@@ -5,7 +5,7 @@ public class Bai1_T3 {
         Scanner sc = new Scanner(System.in);
         System.out.print("Moi nhap so: ");
         int number = sc.nextInt();
-        scanner.close();
+        sc.close();
         if (number > 0)
             System.out.println(number + " la so duong.");
         else 
