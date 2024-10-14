@@ -1,10 +1,10 @@
 package Tuan6;
-public class TaiKhoan{
+public class TKhoanNT{
     private String soTaiKhoan;
     private String chuTaiKhoan;
     private double soDu;
 
-    public TaiKhoan(String soTaiKhoan, String chuTaiKhoan, double soDu) {
+    public TKhoanNT(String soTaiKhoan, String chuTaiKhoan, double soDu) {
         this.soTaiKhoan = soTaiKhoan;
         this.chuTaiKhoan = chuTaiKhoan;
         this.soDu = soDu;

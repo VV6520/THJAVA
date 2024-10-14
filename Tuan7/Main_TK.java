@@ -9,7 +9,7 @@ public class Main_TK {
         String chuTaiKhoan = scanner.nextLine();
         System.out.print("Nhap so du ban dau: ");
         double soDu = scanner.nextDouble();
-        TaiKhoan TaiKhoan = new TaiKhoan(soTaiKhoan, chuTaiKhoan, soDu);
+        TKhoanNT TaiKhoan = new TKhoanNT(soTaiKhoan, chuTaiKhoan, soDu);
         while (true) {
             System.out.println("\nChon thao tac:");
             System.out.println("1. Gui tien");
@@ -36,7 +36,7 @@ public class Main_TK {
                     break;
 
                 case 4:
-                    System.out.println("Thoát chương trình.");
+                    System.out.println("Thoat chuong trinh.");
                     scanner.close();
                     return;
 
