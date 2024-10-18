@@ -21,9 +21,9 @@ public class TaiKhoanNH {
         if (soTien > 0) {
             soDu += soTien;
             System.out.println("Da gui: " + soTien + ". So du hien tai: " + soDu);
-        } else {
+        } 
+        else
             System.out.println("So tien gui phai lon hon 0.");
-        }
     }
 
     public void rutTien(double soTien, String matKhau) {
