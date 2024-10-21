@@ -42,6 +42,14 @@ public class TaiKhoan {
                 System.out.println("So tien rut phai lon hon 0.");
     }
 
+    public double kiemTraSoDu(String matKhau) {
+        if (!this.matKhau.equals(matKhau)) {
+            System.out.println("Mau khau khong dung. Khong the kiem tra so du");
+            return -1;
+        }
+        return soDu;
+    }
+
     // Phương thức thay đổi mật khẩu với kiểu trả về boolean
     public boolean doiMatKhau(String matKhauCu, String matKhauMoi) {
         if (!this.matKhau.equals(matKhauCu)) {
@@ -71,13 +79,5 @@ public class TaiKhoan {
     
     public String getmatKhau() {
         return matKhau;
-    }
-
-    public double kiemTraSoDu(String matKhau) {
-        if (!this.matKhau.equals(matKhau)) {
-            System.out.println("Mau khau khong dung. Khong the kiem tra so du");
-            return -1;
-        }
-        return soDu;
     }
 }
