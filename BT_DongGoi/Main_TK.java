@@ -14,7 +14,7 @@ public class Main_TK {
         System.out.print("Nhap mat khau: ");
         String matKhau = scanner.nextLine();
 
-        // Tạo đối tượng TaiKhoanNH
+        // Tạo đối tượng TaiKhoan
         TaiKhoan taiKhoan = new TaiKhoan(soTaiKhoan, chuTaiKhoan, soDu, matKhau);
 
         System.out.println("\n--Thong tin tai khoan--");
