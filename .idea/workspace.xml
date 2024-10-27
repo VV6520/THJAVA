@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57fb6770-1879-462d-a9fb-dfa53a3eec13" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Git/Baitap_dong_goi/TaiKhoan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Git/Baitap_dong_goi/TaiKhoan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Git/Baitap_dong_goi/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Git/Baitap_dong_goi/test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Git/Tuan8_3/TaiLieu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Git/Tuan8_3/TaiLieu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Git/Tuan8_3/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Git/Tuan8_3/test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Baitap_dong_goi/TaiKhoan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Baitap_dong_goi/TaiKhoan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Baitap_dong_goi/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Baitap_dong_goi/test.java" afterDir="false" />
-    </list>
+    <list default="true" id="57fb6770-1879-462d-a9fb-dfa53a3eec13" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,14 +31,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/IdeaProjects/Git/src&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/Admin/IdeaProjects/Git/src/Baitap_dong_goi_2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Admin\IdeaProjects\Git\src" />
