@@ -1,7 +1,7 @@
-package Baitap_dong_goi;
+package Baitap_dong_goi_2;
 
 import java.util.Scanner;
-
+//Nguyễn Hữu Phước - 23115053122132
 public class TaiKhoan {
     private String soTaiKhoan;
     private String chuTaiKhoan;
@@ -15,19 +15,21 @@ public class TaiKhoan {
     }
     public void guiTien(double tienGui, String xacNhanMK){
         if (this.matKhau.equals(xacNhanMK)){
-            System.out.println("Số tiền gửi thêm vào là: "+ tienGui);
+            System.out.println("Đã gửi thành công. Số tiền gửi thêm vào là: "+ tienGui);
             soDu = this.soDu + tienGui;
-        }
-        else
-            System.out.println("Sai mật khẩu!. Không thể gửi tiền");
+        }else
+            System.out.println("Sai mật khẩu. Không thể gửi tiền");
     }
-    public void rutTien(double tienRut){
+    public void rutTien(double tienRut, String xacNhanMK){
+        if (this.matKhau.equals(xacNhanMK)){
             if (tienRut < this.soDu){
                 System.out.println("Số tiền đã rút là: "+ tienRut);
                 soDu = this.soDu - tienRut;
-             }
-             else
-                 System.out.println("Số dư không đủ!!");
+            }
+            else
+                System.out.println("Số dư không đủ!!");
+        }else
+            System.out.println("Sai mat khau. Không thể rút tiền!!");
     }
     public double kiemTraSoDu(){
         return soDu;

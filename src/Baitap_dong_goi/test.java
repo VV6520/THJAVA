@@ -21,9 +21,11 @@ public class test {
             phuongThuc = new Scanner(System.in).nextInt();
             switch (phuongThuc){
                     case 1:
+                        System.out.println("Nhập vào mật khẩu: ");
+                        String mK = new Scanner(System.in).nextLine();
                         System.out.printf("Nhập vào số tiền cần gửi: ");
                         double tienGui = new Scanner(System.in).nextDouble();
-                        tk.guiTien(tienGui);
+                        tk.guiTien(tienGui, mK);
                         break;
                     case 2:
                         System.out.printf("Nhập vào số tiền cần rút: ");
