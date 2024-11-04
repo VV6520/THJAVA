@@ -36,11 +36,11 @@ public class Main_TKNH {
 
             switch (choice) {
                 case 1:
-                    System.out.print("Nhap so tien muon gui: ");
-                    double soTienGui = scanner.nextDouble();
-                    scanner.nextLine();
                     System.out.print("Nhap mat khau: ");
                     String matKhauGui = scanner.nextLine();
+                    scanner.nextLine();
+                    System.out.print("Nhap so tien muon gui: ");
+                    double soTienGui = scanner.nextDouble();
                     taiKhoan.guiTien(soTienGui, matKhauGui);
                     break;
 
