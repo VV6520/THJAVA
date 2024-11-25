@@ -20,9 +20,13 @@ public class PersonalContact extends Infor_Contact {
         return Nickname;
     }
 
+    public void setNickname(String Nickname) {
+        this.Nickname = Nickname;
+    }
+
     @Override
-    public void EnterContact(Scanner scanner) {
-        super.EnterContact(scanner);
+    public void enterContact(Scanner scanner) {
+        super.enterContact(scanner);
         // Hỏi có muốn nhập biệt danh không
         System.out.print("Bạn có muốn nhập biệt danh không? (Y/N): ");
         String value = scanner.nextLine();
@@ -64,21 +68,14 @@ public class PersonalContact extends Infor_Contact {
     }
 
     @Override
-    public void enterContact(Scanner scanner) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public boolean validateContactInfo() {
-        if (name == null || name.isEmpty()) {
-            System.out.println("Tên không được để trống.");
-            return false;
-        }
-        if (phone == null || !phone.matches("\\d{10}")) { // Giả sử số điện thoại phải có 10 chữ số
-            System.out.println("Số điện thoại không hợp lệ.");
+        if (phone == null || !phone.matches("\\d{10}")) 
+        { // Giả sử số điện thoại phải có 10 chữ số
+            System.out.println("Số điện thoại không đúng như định dạng 10 số.");
             return false;
         }
         return true;
     }
+
 
 }

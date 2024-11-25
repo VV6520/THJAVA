@@ -12,7 +12,6 @@ public class BusinessContact extends Infor_Contact {
     public BusinessContact() {
     }
 
-
     public BusinessContact(String name, String phone, Date dob, String email, String address, String companyName, String position) {
         super(name, phone, dob, email, address);
         this.companyName = companyName;
@@ -26,15 +25,59 @@ public class BusinessContact extends Infor_Contact {
     public String getPosition() {
         return position;
     }    
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
     
     @Override
-    public void EnterContact(Scanner scanner) {
-        super.EnterContact(scanner);
-        System.out.print("Nhập tên công ty: ");
-        this.companyName = scanner.nextLine();
+    public void enterContact(Scanner scanner) {
+        super.enterContact(scanner); // Gọi phương thức nhập thông tin từ lớp cha
 
-        System.out.print("Nhập chức vụ: ");
-        this.position = scanner.nextLine();
+        // Hỏi có muốn nhập thêm thông tin khác không
+        System.out.print("Bạn có muốn nhập thêm thông tin khác không? (Y/N): ");
+        String value = scanner.nextLine();
+
+        if (value.equalsIgnoreCase("Y")) 
+        {
+            String companyNameInput = "";
+            String positionInput = "";
+
+            // Nhập tên công ty
+            while (true) {
+                System.out.print("Nhập tên công ty: ");
+                companyNameInput = scanner.nextLine().trim(); // Trim để loại bỏ khoảng trắng
+
+                if (!companyNameInput.isEmpty()) {
+                    break; // Thoát khỏi vòng lặp nếu tên công ty hợp lệ
+                } else {
+                    System.out.println("Tên công ty không được để trống.");
+                }
+            }
+            this.companyName = companyNameInput; // Gán giá trị hợp lệ cho companyName
+
+            // Nhập chức vụ
+            while (true) {
+                System.out.print("Nhập chức vụ: ");
+                positionInput = scanner.nextLine().trim(); // Trim để loại bỏ khoảng trắng
+
+                if (!positionInput.isEmpty()) {
+                    break; // Thoát khỏi vòng lặp nếu chức vụ hợp lệ
+                } else {
+                    System.out.println("Chức vụ không được để trống.");
+                }
+            }
+            this.position = positionInput; // Gán giá trị hợp lệ cho position
+        } 
+        else 
+        {
+            this.companyName = null; // Không nhập tên công ty
+            this.position = null; // Không nhập chức vụ
+        }
     }
 
     @Override
@@ -68,14 +111,14 @@ public class BusinessContact extends Infor_Contact {
     }
 
     @Override
-    public void enterContact(Scanner scanner) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public boolean validateContactInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        // Kiểm tra số điện thoại
+        if (phone == null || !phone.matches("\\d{10,11}")) {
+            System.out.println("Số điện thoại không hợp lệ. Phải có 10 hoặc 11 chữ số.");
+            return false; // Ngay lập tức trả về false nếu số điện thoại không hợp lệ
+        }
+        return true;
     }
-
-
+    
 }

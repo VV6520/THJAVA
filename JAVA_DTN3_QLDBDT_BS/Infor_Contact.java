@@ -8,7 +8,7 @@ import java.util.Scanner;
 public abstract class Infor_Contact implements IContact_Manager {
     protected String name;
     protected String phone;
-    protected Date dob; // Thêm thuộc tính sinh nhật
+    protected Date dob;
     protected String email;
     protected String address;
 
@@ -42,14 +42,56 @@ public abstract class Infor_Contact implements IContact_Manager {
     public Date getdob() {
         return dob;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
     
     // Phương thức để nhập thông tin
-    public void EnterContact(Scanner scanner) {
-        System.out.print("Nhập tên: ");
-        this.name = scanner.nextLine();
+    @Override
+    public void enterContact(Scanner scanner) {
+        boolean isValid = false;
 
-        System.out.print("Nhập số điện thoại: ");
-        this.phone = scanner.nextLine();
+        while (!isValid) { // Tiếp tục vòng lặp cho đến khi thông tin hợp lệ
+            System.out.print("Nhập tên liên hệ: ");
+            this.name = scanner.nextLine().trim(); // Trim để loại bỏ khoảng trắng
+
+            if (name.isEmpty()) {
+                System.out.println("Tên không được để trống.");
+                continue; // Bỏ qua bước nhập số điện thoại nếu tên rỗng
+            }
+
+            // Nhập số điện thoại trong một vòng lặp
+            while (true) {
+                System.out.print("Nhập số điện thoại: ");
+                this.phone = scanner.nextLine().trim(); // Trim để loại bỏ khoảng trắng
+
+                // Kiểm tra tính hợp lệ của số điện thoại
+                isValid = validateContactInfo();
+                if (isValid) {
+                    break; // Thoát khỏi vòng lặp nếu số điện thoại hợp lệ
+                }
+            }
+
+            // Nếu tên hợp lệ và số điện thoại hợp lệ, đặt isValid thành true
+            isValid = true;
+        }
 
         // Hỏi có muốn nhập ngày sinh không
         System.out.print("Bạn có muốn nhập ngày sinh không? (Y/N): ");
@@ -88,7 +130,7 @@ public abstract class Infor_Contact implements IContact_Manager {
         try {
             this.dob = dateFormat.parse(ngaySinhStr);
         } catch (ParseException e) {
-            System.out.println("Nhập định dạng sai. Nhập lại");
+            System.out.println("Định dạng ngày sinh không hợp lệ. Vui lòng nhập lại.");
             nhapNgaySinh(scanner);
         }
     }
@@ -102,7 +144,7 @@ public abstract class Infor_Contact implements IContact_Manager {
         System.out.println("Địa chỉ: " + address);
     }
     
-    @Override
     public abstract boolean validateContactInfo();
+
     
 }

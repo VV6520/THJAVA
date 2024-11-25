@@ -1,5 +1,6 @@
 package JAVA_DTN3_QLDBDT_BS;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CallSchedule {
@@ -19,7 +20,8 @@ public class CallSchedule {
         return callTime;
     }
     
-    public void displaySchedule() {
-        System.out.println("Liên hệ: " + contactName + ", Thời gian: " + callTime);
+    public void displayScheduledCalls() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        System.out.println("Liên hệ: " + contactName + ", Thời gian: " + dateFormat.format(callTime));
     }
 }
