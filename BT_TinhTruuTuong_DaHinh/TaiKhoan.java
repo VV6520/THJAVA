@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public abstract class TaiKhoan {
+public abstract class TaiKhoan implements ITAIKHOAN {
     protected String soTaiKhoan;
     protected String chuTaiKhoan;
     protected double soDu;

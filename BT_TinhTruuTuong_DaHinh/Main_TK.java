@@ -10,7 +10,8 @@ public class Main_TK {
     }
 
     public static void Menu() {
-        Scanner scanner = new Scanner(System.in);        int choice;
+        Scanner scanner = new Scanner(System.in);        
+        int choice;
 
         do {
             System.out.println("\n== Menu Chính ==\n1. Đăng Ký\n2. Đăng Nhập\n3. Quên Mật Khẩu\n4. Xem Danh Sách Tài Khoản\n5. Xóa Tài Khoản\n6. Tìm Kiếm Tài Khoản\n7. Thoát");
