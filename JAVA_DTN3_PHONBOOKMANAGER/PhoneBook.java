@@ -450,10 +450,13 @@ public class PhoneBook implements IContact_Manager {
             // Lặp qua danh sách cuộc gọi đã lên lịch để tìm các cuộc gọi cho ngày đã nhập
             boolean hasCalls = false; // Biến để kiểm tra xem có cuộc gọi nào trong ngày không
             for (CallSchedule call : callSchedules) {
-                // So sánh ngày (chỉ lấy ngày, tháng, năm)
+                // So sánh ngày (chỉ lấy ngày, tháng, năm) và kiểm tra xem liên hệ có bị chặn không
                 if (isSameDay(call.getCallTime(), inputDate)) {
-                    System.out.printf("%-20s %-25s\n", call.getContactName(), call.getCallTime());
-                    hasCalls = true;
+                    Infor_Contact contact = getContactByName(call.getContactName());
+                    if (contact != null && !blockedContactList.isBlocked(contact)) {
+                        System.out.printf("%-20s %-25s\n", contact.getName(), call.getCallTime());
+                        hasCalls = true;
+                    }
                 }
             }
 
