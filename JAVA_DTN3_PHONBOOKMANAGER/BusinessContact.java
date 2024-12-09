@@ -1,4 +1,4 @@
-package JAVA_DTN3_PHONEBOOKMANAGER;
+package JAVA_DTN3_QLDBDT;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -102,14 +102,13 @@ public class BusinessContact extends Infor_Contact {
         }
     }
     
-    @Override
-    public boolean validateContactInfo() {
-
+    public boolean validContactInfo() {
         // Kiểm tra số điện thoại
         if (phone == null || !phone.matches("\\d{10,11}")) {
             System.out.println("Số điện thoại không hợp lệ. Phải có 10 hoặc 11 chữ số.");
             return false; // Ngay lập tức trả về false nếu số điện thoại không hợp lệ
         }
+
         return true;
     }
 

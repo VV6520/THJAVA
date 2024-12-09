@@ -1,4 +1,4 @@
-package JAVA_DTN3_PHONEBOOKMANAGER;
+package JAVA_DTN3_QLDBDT;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -201,7 +201,7 @@ public class Main_ContactManager {
                         PersonalContact person = new PersonalContact();
                         person.enterContact(scanner, phoneBook); // Truyền phoneBook vào phương thức
 
-                        if (person.validateContactInfo()) {
+                        if (person.validContactInfo()) {
                             // Kiểm tra xem liên hệ đã tồn tại hay chưa
                             if (!phoneBook.isContactExists(person.getName(), person.getPhone())) {
                                 phoneBook.addContact(person); // Thêm liên hệ vào danh bạ
@@ -224,7 +224,7 @@ public class Main_ContactManager {
                         BusinessContact business = new BusinessContact();
                         business.enterContact(scanner, phoneBook); // Truyền phoneBook vào phương thức
 
-                        if (business.validateContactInfo()) {
+                        if (business.validContactInfo()) {
                             // Kiểm tra xem liên hệ đã tồn tại hay chưa
                             if (!phoneBook.isContactExists(business.getName(), business.getPhone())) {
                                 phoneBook.addContact(business); // Thêm liên hệ vào danh bạ

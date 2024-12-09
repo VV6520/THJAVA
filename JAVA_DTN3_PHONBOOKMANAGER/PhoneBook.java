@@ -1,4 +1,4 @@
-package JAVA_DTN3_PHONEBOOKMANAGER;
+package JAVA_DTN3_QLDBDT;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -681,7 +681,7 @@ public class PhoneBook implements IContact_Manager {
     }
     
     // Phương thức chặn liên hệ
-        public void blockContact(String identifier) {
+    public void blockContact(String identifier) {
         // Gọi phương thức tìm kiếm và kiểm tra kết quả
         searchContacts(identifier); // Gọi phương thức tìm kiếm
 
@@ -719,7 +719,6 @@ public class PhoneBook implements IContact_Manager {
         for (Infor_Contact contact : matchingContacts) {
             if (blockedContactList.isBlocked(contact)) { // Kiểm tra xem liên hệ có bị chặn không
                 blockedContactList.unblockContact(contact); // Mở khóa liên hệ
-                break;
             } 
             else {
                 System.out.println("Liên hệ " + contact.getName() + " không bị chặn.");

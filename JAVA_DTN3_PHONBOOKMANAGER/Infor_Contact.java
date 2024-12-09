@@ -1,4 +1,4 @@
-package JAVA_DTN3_PHONEBOOKMANAGER;
+package JAVA_DTN3_QLDBDT;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,7 +88,7 @@ public abstract class Infor_Contact {
                 }
 
                 // Kiểm tra tính hợp lệ của số điện thoại
-                isValid = validateContactInfo();
+                isValid = validContactInfo();
                 if (isValid) {
                     break;
                 }
@@ -147,6 +147,6 @@ public abstract class Infor_Contact {
         System.out.println("Địa chỉ: " + address);
     }
     
-    public abstract boolean validateContactInfo();
+    public abstract boolean validContactInfo();
     
 }

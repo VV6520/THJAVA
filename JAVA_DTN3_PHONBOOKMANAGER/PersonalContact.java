@@ -1,4 +1,4 @@
-package JAVA_DTN3_PHONEBOOKMANAGER;
+package JAVA_DTN3_QLDBDT;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -63,7 +63,7 @@ public class PersonalContact extends Infor_Contact {
     }
 
     @Override
-    public boolean validateContactInfo() {
+    public boolean validContactInfo() {
         if (phone == null || !phone.matches("\\d{10}")) 
         { // Giả sử số điện thoại phải có 10 chữ số
             System.out.println("Số điện thoại không đúng như định dạng 10 số.");
