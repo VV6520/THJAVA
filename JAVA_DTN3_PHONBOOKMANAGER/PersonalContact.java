@@ -1,4 +1,4 @@
-package JAVA_DTN3_QLDBDT;
+package JAVA_DTN3_PHONEBOOKMANAGER;
 
 import java.util.Date;
 import java.util.Scanner;

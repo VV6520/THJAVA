@@ -1,102 +1,144 @@
-package BT_TinhKeThua;
+package BT_TinhTruuTuong_DaHinh;
 
+import QLDS_HD_KH.ITAIKHOAN;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class TaiKhoan {
+public abstract class TaiKhoan implements ITAIKHOAN {
     protected String soTaiKhoan;
     protected String chuTaiKhoan;
     protected double soDu;
     protected String matKhau;
-    protected String cccd;
-    private int soLanNhapSai; // Biến lưu số lần nhập sai
+    private int failedLoginAttempts; // Biến lưu số lần nhập sai
     private boolean khoaTaiKhoan; // Biến trạng thái khóa tài khoản
     private long thoiGianKhoa; // Thời gian tài khoản bị khóa
-    private static final int MAX_NHAP = 3; // Số lần nhập tối đa cho mật khẩu
-    private static final long maxTimeLock = 20000; // Thời gian khóa tài khoản (20 giây)
-    protected String otp; // Biến lưu mã OTP
-    protected List<String> xemlichSuGiaoDich = new ArrayList<>();
-
-    public TaiKhoan() {}
-
-    public void Nhap() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Nhập số tài khoản: ");
-        this.soTaiKhoan = scanner.nextLine();
-
-        System.out.print("Nhập chủ tài khoản: ");
-        this.chuTaiKhoan = scanner.nextLine();
-
-        System.out.print("Nhập số dư: ");
-        this.soDu = scanner.nextDouble();
-        scanner.nextLine(); // Đọc dòng mới
-
-        System.out.print("Nhập số CCCD: ");
-        this.cccd = scanner.nextLine();
-    }
-
-    public void Xuat() {
-        System.out.println("Số tài khoản: " + this.soTaiKhoan);
-        System.out.println("Chủ tài khoản: " + this.chuTaiKhoan);
-        System.out.println("Số dư: " + this.soDu);
-        System.out.println("Số CCCD: " + this.cccd);
+    protected static final int MAX_NHAP = 3; // Số lần nhập tối đa cho mật khẩu
+    private static final long maxLockTime = 20000; // Thời gian khóa tài khoản (20 giây)
+    private String otp; // Biến lưu mã OTP
+    protected long otpCreationTime; // Thời gian tạo OTP
+    static final Scanner scanner = new Scanner(System.in); // Khai báo một lần
+    protected List<String> lichSuGiaoDich; // Lưu trữ lịch sử giao dịch
+    
+    public TaiKhoan() {
+        lichSuGiaoDich = new ArrayList<>(); // Khởi tạo danh sách giao dịch
     }
     
-    public boolean DangKy() {
-        Nhap(); // Nhập thông tin tài khoản
+    public TaiKhoan(String soTaiKhoan, String chuTaiKhoan, double soDu, String matKhau) {
 
-        Scanner scanner = new Scanner(System.in);
-        String matKhauMoi;
+        this.chuTaiKhoan = chuTaiKhoan;
+        this.soDu = soDu;
+        this.matKhau = matKhau;
+        this.lichSuGiaoDich = new ArrayList<>();
+    }
+    
+    public String getSoTaiKhoan() {
+        return soTaiKhoan;
+    }
 
-        System.out.println("Bạn muốn tạo mật khẩu (1: Bình thường, 2: Cấp cao)?");
-        int luaChon = scanner.nextInt();
-        scanner.nextLine(); // Đọc bỏ dòng mới
+    public void setSoTaiKhoan(String soTaiKhoan) {
+        this.soTaiKhoan = soTaiKhoan;
+    }
+    
+    public String getChuTaiKhoan() {
+        return chuTaiKhoan;
+    }
 
-        while (true) {
-            System.out.print("Nhập mật khẩu: ");
-            matKhauMoi = scanner.nextLine();
+    public void setChuTaiKhoan(String chuTaiKhoan) {
+        this.chuTaiKhoan = chuTaiKhoan;
+    }
 
-            if ((luaChon == 1 && !KiemTraMatKhau(matKhauMoi)) ||
-                (luaChon == 2 && !KiemTraMatKhauCC(matKhauMoi))) {
-                System.out.println("Mật khẩu không hợp lệ. Vui lòng nhập lại.");
+    public double getSoDu() {
+        return soDu;
+    }
+
+    public void setSoDu(double soDu) {
+        this.soDu = soDu;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+    
+    // Phương thức đăng ký tài khoản
+    public void DangKy() {
+        
+        try {
+            System.out.print("Nhập số tài khoản: ");
+            this.soTaiKhoan = scanner.nextLine();
+
+            System.out.print("Nhập chủ tài khoản: ");
+            this.chuTaiKhoan = scanner.nextLine();
+
+            double soDu;
+            while (true) {
+                try {
+                    System.out.print("Nhập số dư: ");
+                    soDu = scanner.nextDouble();
+                    if (soDu < 0) {
+                        System.out.println("Số dư không thể âm. Vui lòng nhập lại:");
+                        continue;
+                    }
+                    this.soDu = soDu;
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Giá trị không hợp lệ. Vui lòng nhập lại số dư:");
+                    scanner.next(); // Xóa bỏ giá trị sai
+                }
+            }
+            scanner.nextLine(); // Đọc bỏ dòng mới
+
+            String matKhauMoi;
+            while (true) {
+                System.out.print("Mời nhập mật khẩu: ");
+                matKhauMoi = scanner.nextLine();
+
+                if (!KiemTraMatKhauCC(matKhauMoi)) {
+                    System.out.println("Mật khẩu không hợp lệ. Vui lòng nhập lại.");
+                } else {
+                    this.matKhau = matKhauMoi;
+                    break; // Thoát vòng lặp nếu mật khẩu hợp lệ
+                }
+            }
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Giá trị không hợp lệ. Vui lòng nhập lại số dư:");
+            scanner.next(); // Xóa bỏ giá trị sai
+        }
+    }
+    // Phương thức đăng nhập tài khoản trừu tượng
+    public void DangNhap() {
+        if (khoaTaiKhoan) {
+            if (System.currentTimeMillis() - thoiGianKhoa < maxLockTime) {
+                System.out.println("Tài khoản đang bị tạm khóa. Vui lòng thử lại sau.");
+                return; // Kết thúc phương thức nếu tài khoản bị khóa
             } else {
-                this.matKhau = matKhauMoi;
-                break; // Thoát vòng lặp nếu mật khẩu hợp lệ
+                khoaTaiKhoan = false; // Mở khóa tài khoản nếu thời gian đã hết
+                failedLoginAttempts = 0; // Đặt lại số lần nhập sai
             }
         }
 
-        // Gửi OTP và xác minh
-        if (!thietLapMatKhauVaXacThucOTP()) {
-            System.out.println("Đăng ký thất bại do xác thực OTP không thành công.");
-            return false;
+        // Gọi phương thức kiểm tra số lần nhập mật khẩu
+        boolean isSuccess = kiemTraSLMatKhau(scanner, MAX_NHAP);
+
+        if (isSuccess) {
+            System.out.println("Đăng nhập thành công.");
+        } else {
+            khoaTaiKhoan = true; // Khóa tài khoản sau số lần nhập sai tối đa
+            thoiGianKhoa = System.currentTimeMillis(); // Ghi lại thời gian khóa
+            System.out.println("Tài khoản đã bị khóa do nhập sai quá nhiều lần.");
         }
-
-        System.out.println("Đăng ký thành công!");
-        return true; // Trả về true nếu đăng ký thành công
     }
 
-    public boolean KiemTraMatKhau(String matKhau) {
-        if (matKhau.length() < 8) {
-            System.out.println("Mật khẩu phải có ít nhất 8 ký tự.");
-            return false; // Không hợp lệ nếu độ dài dưới 8 ký tự
-        }
-        return true; // Hợp lệ nếu độ dài đủ
-    }
-
-    private boolean thietLapMatKhauVaXacThucOTP() {
-        guiOTP(); // Gửi mã OTP
-        return xacMinhOTP(); // Xác thực mã OTP
-    }
-
+    // Phương thức kiểm tra mật khẩu cấp cao
     public boolean KiemTraMatKhauCC(String matKhau) {
         if (matKhau.length() < 8) {
             System.out.println("Mật khẩu phải có ít nhất 8 ký tự.");
             return false;
         }
-
+        
         boolean coChuHoa = false;
         boolean coChuThuong = false;
         boolean coSo = false;
@@ -116,45 +158,68 @@ public class TaiKhoan {
 
         return coChuHoa && coChuThuong && coSo && coKyTuDB;
     }
-
-    public boolean DangNhap() {
-        if (khoaTaiKhoan) {
-            if (System.currentTimeMillis() - thoiGianKhoa < maxTimeLock) {
-                System.out.println("Tài khoản đang bị khóa. Vui lòng thử lại sau.");
-                return false;
-            } else {
-                khoaTaiKhoan = false; // Mở khóa tài khoản nếu thời gian đã hết
-                soLanNhapSai = 0; // Đặt lại số lần nhập sai
-            }
+    
+    public void Xuat() {
+        System.out.println("Số tài khoản: " + getSoTaiKhoan());
+        System.out.println("Chủ tài khoản: " + getChuTaiKhoan());
+        System.out.println("Số dư: " + getSoDu());
+    }
+    
+    //Phương thức gửi tiền trừu tượng 
+    public abstract void guiTien(double soTienGui);
+    
+    //Phương thức rút tiền trừu tượng
+    public abstract void rutTien(double soTienRut);
+    
+    //Phương thức kiểm tra số dư
+    public double kiemTraSoDu(String matKhau) {
+        if (!isMatKhauDung(matKhau)) {
+            System.out.println("Mật khẩu không đúng. Không thể kiểm tra số dư.");
+            return -1;
         }
-        return kiemTraMatKhau(new Scanner(System.in), MAX_NHAP); // Sử dụng số lần nhập tối đa
+        return soDu;
+    }
+    
+    // Phương thức kiểm tra mật khẩu thường
+    public boolean KiemTraMatKhau(String matKhau) {
+        if (matKhau.length() < 8) {
+            return false; 
+        }
+        return true; 
     }
 
-    private boolean kiemTraMatKhau(Scanner scanner, int limitpass) {
-        for (int test = 0; test < limitpass; test++) {
+    // Phương thức gửi OTP và xác minh
+    protected boolean xacThucOTP() {
+        guiOTP();
+        return xacMinhOTP();
+    }
+    
+    // Phương thức kiểm tra số lần nhập mật khẩu
+    public boolean kiemTraSLMatKhau(Scanner scanner, int MAX_NHAP) {
+        for (int test = 0; test < MAX_NHAP; test++) {
             System.out.print("Nhập mật khẩu: ");
             String matKhauNhap = scanner.nextLine();
             if (this.matKhau.equals(matKhauNhap)) {
                 return true;
             }
-            System.out.println("Mật khẩu không đúng. Bạn còn " + (limitpass - test - 1) + " lần thử.");
+            System.out.println("Mật khẩu không đúng. Bạn còn " + (MAX_NHAP - test - 1) + " lần thử.");
         }
         return false;
     }
 
+    // Phương thức quên mật khẩu
     public void QuenMatKhau() {
-        Scanner scanner = new Scanner(System.in);
-        int thu = 0;
-
-        while (thu < MAX_NHAP) {
+        
+        int t = 0;
+        while (t < MAX_NHAP) {
             System.out.print("Nhập mật khẩu cũ: ");
             String matKhauCu = scanner.nextLine();
 
             if (!this.matKhau.equals(matKhauCu)) {
                 System.out.println("Mật khẩu cũ không chính xác.");
-                thu++;
+                t++;
                 // Kiểm tra số lần nhập sai
-                if (thu >= 2) {
+                if (t >= 2) {
                     khoaTaiKhoan = true; // Khóa tài khoản
                     thoiGianKhoa = System.currentTimeMillis(); // Ghi lại thời gian khóa
                     System.out.println("Tài khoản đã bị tạm khóa trong 20 giây do nhập sai mật khẩu quá nhiều lần.");
@@ -164,7 +229,7 @@ public class TaiKhoan {
             }
 
             // Nếu mật khẩu cũ đúng, reset số lần nhập sai
-            thu = 0;
+            t = 0;
 
             // Nhập mật khẩu mới
             int thuMoi = 0;
@@ -183,11 +248,13 @@ public class TaiKhoan {
                         this.matKhau = matKhauMoi; // Chỉ thay đổi mật khẩu sau khi xác thực OTP thành công
                         System.out.println("Đổi mật khẩu thành công!");
                         return; // Kết thúc phương thức
-                    } else {
+                    } 
+                    else {
                         System.out.println("Xác thực OTP không thành công. Đổi mật khẩu thất bại.");
                         return; // Kết thúc nếu xác minh OTP không thành công
                     }
-                } else {
+                } 
+                else {
                     System.out.println("Lựa chọn thay đổi mật khẩu không hợp lệ. Mời bạn thử lại sau.");
                     thuMoi++;
                 }
@@ -197,102 +264,10 @@ public class TaiKhoan {
         }
         System.out.println("Quá nhiều lần thử!");
     }
-
-    public void guiTien(double soTien, String matKhau) {
-        if (isMatKhauDung(matKhau)) {
-            if (soTien > 0) {
-                soDu += soTien;
-                xemlichSuGiaoDich.add("Gửi tiền: " + soTien + " VNĐ"); // Lưu giao dịch
-                System.out.println("Đã gửi: " + soTien + ". Số dư hiện tại: " + soDu);
-            } else {
-                System.out.println("Số tiền gửi phải lớn hơn 0.");
-            }
-        } else {
-            System.out.println("Mật khẩu không đúng. Không thể thực hiện thao tác gửi tiền.");
-        }
-    }
-
-    public void rutTien(double soTienRut) {
-        // Kiểm tra số tiền rút hợp lệ
-        if (soTienRut <= 0 || soTienRut > soDu) {
-            System.out.println("Không đủ số dư hoặc số tiền rút không hợp lệ.");
-            return;
-        }
-
-        // Nhập mật khẩu
-        Scanner scanner = new Scanner(System.in);
-        int sothu = 0;
-        while (sothu < 2) {
-            System.out.print("Nhập mật khẩu: ");
-            String matKhauNhap = scanner.nextLine();
-
-            if (isMatKhauDung(matKhauNhap)) {
-                guiOTP(); // Gửi mã OTP
-                if (xacMinhOTP()) {
-                    soDu -= soTienRut;
-                    xemlichSuGiaoDich.add("Rút tiền: " + soTienRut + " VNĐ"); // Lưu giao dịch
-                    System.out.println("Đã rút: " + soTienRut + ". Số dư hiện tại: " + soDu);
-                } else {
-                    System.out.println("Xác thực OTP không thành công. Không thể rút tiền.");
-                }
-                return; // Kết thúc phương thức sau khi thực hiện rút tiền
-            } else {
-                sothu++;
-                System.out.println("Mật khẩu không đúng. Bạn còn " + (2 - sothu) + " lần thử.");
-            }
-        }
-        System.out.println("Không thể thực hiện thao tác rút tiền do nhập sai mật khẩu quá nhiều lần.");
-    }
     
-    public void xemLichSuGiaoDich() {
-        System.out.println("Lịch sử giao dịch:");
-        for (String giaoDich : xemlichSuGiaoDich) {
-            System.out.println(giaoDich);
-        }
-    }
-
-    public double kiemTraSoDu(String matKhau) {
-        if (!isMatKhauDung(matKhau)) {
-            System.out.println("Mật khẩu không đúng. Không thể kiểm tra số dư.");
-            return -1;
-        }
-        return soDu;
-    }
-
+    // Phương thức kiểm tra mật khẩu cũ có đúng với mật khẩu nhập
     public boolean isMatKhauDung(String matKhauNhap) {
         return this.matKhau.equals(matKhauNhap);
-    }
-
-    public double getSoDu() {
-        return soDu;
-    }
-
-    protected String getMatKhau() {
-        return matKhau;
-    }
-    
-    public String getChuTaiKhoan() {
-        return chuTaiKhoan;
-    }
-
-    public String getSoTaiKhoan() {
-        return soTaiKhoan;
-    }
-
-    public void setSoTaiKhoan(String soTaiKhoan) {
-        this.soTaiKhoan = soTaiKhoan;
-    }
-
-    public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
-    }
-    
-    public void setChuTaiKhoan(String chuTaiKhoan) {
-        this.chuTaiKhoan = chuTaiKhoan;
-    }
-    
-    protected String getCccd() {
-        return cccd;
     }
     
     public boolean isKhoaTaiKhoan() {
@@ -303,31 +278,36 @@ public class TaiKhoan {
         this.khoaTaiKhoan = accountLocked;
     }
 
-    protected void guiOTP() {
+    // Phương thức gửi mã OTP
+    public void guiOTP() {
         Random random = new Random();
-        this.otp = String.valueOf(random.nextInt(900000) + 100000); // Tạo OTP 6 chữ số
-        System.out.println("Mã OTP dùng để xác thực là: " + otp); // Giả lập gửi OTP
+        this.otp = String.valueOf(random.nextInt(900000) + 100000);
+        this.otpCreationTime = System.currentTimeMillis();
+        System.out.println("Mã OTP dùng để xác thực là: " + otp);
     }
 
-    protected boolean xacMinhOTP() {
-        Scanner scanner = new Scanner(System.in);
-        int solanthu = 0; // Biến lưu số lần thử nhập mã OTP
-
-        while (solanthu < 2) { // Cho phép nhập lại tối đa 2 lần
+    public boolean xacMinhOTP() {
+        if (System.currentTimeMillis() - otpCreationTime > 15000) { // 15 giây
+            System.out.println("Mã OTP đã hết hạn.");
+            return false;
+        }
+        // Tiếp tục xác minh OTP
+        for (int solanthu = 0; solanthu < 2; solanthu++) {
             System.out.print("Vui lòng nhập mã OTP: ");
             String otpNhap = scanner.nextLine();
-            if (this.otp.equals(otpNhap)) {
-                return true; // Xác thực thành công
-            } else {
-                solanthu++;
-                System.out.println("Mã OTP không chính xác. Bạn còn " + (2 - solanthu) + " lần thử.");
-            }
+            if (this.otp.equals(otpNhap))
+                return true; 
+            System.out.println("Mã OTP không chính xác. Bạn còn " + (2 - solanthu) + " lần thử.");
         }
         return false;
     }
-
-    public List<String> getxemlichSuGiaoDich() {
-        return xemlichSuGiaoDich; // Trả về danh sách lịch sử giao dịch
-    }
     
+    public void themGiaoDich(String giaoDich) {
+        lichSuGiaoDich.add(giaoDich);
+    }
+
+    public List<String> getLichSuGiaoDich() {
+        return lichSuGiaoDich;
+    }
+
 }
