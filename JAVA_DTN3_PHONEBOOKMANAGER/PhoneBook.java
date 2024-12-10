@@ -404,6 +404,28 @@ public class PhoneBook implements IContact_Manager {
         System.out.print("Nhập tên liên hệ muốn lên lịch gọi: ");
         String contactName = scanner.nextLine();
 
+        // Kiểm tra nếu liên hệ bị chặn ngay sau khi nhập tên
+        Infor_Contact contactToSchedule = null;
+        for (Infor_Contact contact : phonebook) {
+            if (contact.getName().equalsIgnoreCase(contactName)) {
+                contactToSchedule = contact;
+                break;
+            }
+        }
+
+        // Nếu không tìm thấy liên hệ
+        if (contactToSchedule == null) {
+            System.out.println("Liên hệ không tồn tại. Không thể lên lịch cuộc gọi.");
+            return;
+        }
+
+        // Kiểm tra nếu liên hệ bị chặn
+        if (blockedContactList.isBlocked(contactToSchedule)) {
+            System.out.println("Liên hệ " + contactName + " đang bị chặn, không thể lên lịch cuộc gọi.");
+            return;
+        }
+
+        // Nhập ngày và giờ nếu liên hệ không bị chặn
         System.out.print("Nhập ngày muốn lên lịch (ngày/tháng/năm): ");
         String dateInput = scanner.nextLine();
         System.out.print("Nhập vào giờ bạn muốn gọi (giờ:phút): ");
@@ -413,19 +435,9 @@ public class PhoneBook implements IContact_Manager {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date callTime = dateFormat.parse(dateInput + " " + timeInput);
 
-            for (Infor_Contact contact : phonebook) {
-                if (contact.getName().equalsIgnoreCase(contactName)) {
-                    if (blockedContactList.isBlocked(contact)) {
-                        System.out.println("Liên hệ " + contactName + " đang bị chặn, không thể lên lịch cuộc gọi.");
-                        return;
-                    }
-                    callSchedules.add(new CallSchedule(contactName, callTime));
-                    System.out.println("Cuộc gọi với " + contactName + " đã được bạn lên lịch vào " + callTime);
-                    return;
-                }
-            }
-
-            System.out.println("Liên hệ không tồn tại. Không thể lên lịch cuộc gọi.");
+            // Thêm lịch gọi
+            callSchedules.add(new CallSchedule(contactName, callTime));
+            System.out.println("Cuộc gọi với " + contactName + " đã được bạn lên lịch vào " + callTime);
         } catch (ParseException e) {
             System.out.println("Định dạng thời gian không hợp lệ. Vui lòng sử dụng định dạng dd/MM/yyyy HH:mm.");
         }
@@ -450,10 +462,13 @@ public class PhoneBook implements IContact_Manager {
             // Lặp qua danh sách cuộc gọi đã lên lịch để tìm các cuộc gọi cho ngày đã nhập
             boolean hasCalls = false; // Biến để kiểm tra xem có cuộc gọi nào trong ngày không
             for (CallSchedule call : callSchedules) {
-                // So sánh ngày (chỉ lấy ngày, tháng, năm)
+                // So sánh ngày (chỉ lấy ngày, tháng, năm) và kiểm tra xem liên hệ có bị chặn không
                 if (isSameDay(call.getCallTime(), inputDate)) {
-                    System.out.printf("%-20s %-25s\n", call.getContactName(), call.getCallTime());
-                    hasCalls = true;
+                    Infor_Contact contact = getContactByName(call.getContactName());
+                    if (contact != null && !blockedContactList.isBlocked(contact)) {
+                        System.out.printf("%-20s %-25s\n", contact.getName(), call.getCallTime());
+                        hasCalls = true;
+                    }
                 }
             }
 
@@ -555,15 +570,6 @@ public class PhoneBook implements IContact_Manager {
         } else {
             System.out.println("Không tìm thấy liên hệ với tên hoặc số điện thoại: " + identifier);
         }
-    }
-    
-    public Infor_Contact getContacts(String phone) {
-        for (Infor_Contact IC : phonebook) {
-            if (IC.getPhone().equals(phone)) {
-                return IC; // Trả về liên hệ nếu tìm thấy
-            }
-        }
-        return null; // Trả về null nếu không tìm thấy
     }
 
     @Override

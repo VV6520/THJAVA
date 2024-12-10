@@ -127,7 +127,7 @@ public abstract class Infor_Contact {
     }
 
     // Phương thức để nhập ngày sinh
-    protected void nhapNgaySinh(Scanner scanner) {
+    public void nhapNgaySinh(Scanner scanner) {
         System.out.println("Nhập ngày sinh (ngày/tháng/năm): ");
         String ngaySinhStr = scanner.nextLine();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

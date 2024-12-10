@@ -83,24 +83,6 @@ public class BusinessContact extends Infor_Contact {
         System.out.println("Tên công ty: " + companyName);
         System.out.println("Chức vụ: " + position);
     }
-
-    
-    public void editContactInfo(String name, String phone, String DoB, String email, String address) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-
-        // Cập nhật ngày sinh
-        if (DoB != null && !DoB.isEmpty()) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                this.dob = dateFormat.parse(DoB);
-            } catch (ParseException e) {
-                System.out.println("Định dạng ngày sinh không hợp lệ. Vui lòng nhập lại.");
-            }
-        }
-    }
     
     public boolean validContactInfo() {
         // Kiểm tra số điện thoại

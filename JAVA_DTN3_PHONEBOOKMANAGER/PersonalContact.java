@@ -39,27 +39,11 @@ public class PersonalContact extends Infor_Contact {
             this.Nickname = null; // Không nhập biệt danh
         }
     }
+    
     @Override
     public void displayContactInfo() {
         super.displayContactInfo();
         System.out.println("Biệt danh: " + Nickname);
-    }
-
-    public void editContactInfo(String name, String phone, String DoB, String email, String address) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-
-        // Cập nhật ngày sinh
-        if (DoB != null && !DoB.isEmpty()) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                this.dob = dateFormat.parse(DoB);
-            } catch (ParseException e) {
-                System.out.println("Định dạng ngày sinh không hợp lệ. Vui lòng nhập lại.");
-            }
-        }
     }
 
     @Override
